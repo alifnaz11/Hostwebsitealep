@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <style>
+        /* Modern reset and minimalist dark theme */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #0f0f0f;
+            color: #00ff41; /* Classic "Matrix" green, or use #ffffff for pure white */
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-weight: 400;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        /* Subtle blinking cursor effect for that coder feel */
+        h1::after {
+            content: "_";
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>hello world</h1>
+    </div>
+</body>
+</html>
