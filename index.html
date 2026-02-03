@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hello World</title>
-    <b><title>Epul Tak Hensem</title></b>
-    
     <style>
-        /* Modern reset and minimalist dark theme */
         body {
             margin: 0;
             padding: 0;
             display: flex;
+            /* Stack items vertically */
+            flex-direction: column; 
             justify-content: center;
             align-items: center;
             height: 100vh;
             background-color: #0f0f0f;
-            color: #00ff41; /* Classic "Matrix" green, or use #ffffff for pure white */
+            color: #00ff41; 
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
         }
 
@@ -28,9 +27,16 @@
             font-weight: 400;
             font-size: 1.5rem;
             letter-spacing: -0.02em;
+            margin: 0;
         }
 
-        /* Subtle blinking cursor effect for that coder feel */
+        /* The new second line style */
+        p {
+            margin-top: 10px;
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
         h1::after {
             content: "_";
             animation: blink 1s step-end infinite;
@@ -44,6 +50,7 @@
 <body>
     <div class="container">
         <h1>hello world</h1>
+        <p>Epul Tak Hensem</p>
     </div>
 </body>
 </html>
