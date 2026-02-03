@@ -9,7 +9,6 @@
             margin: 0;
             padding: 0;
             display: flex;
-            /* Stack items vertically */
             flex-direction: column; 
             justify-content: center;
             align-items: center;
@@ -17,20 +16,21 @@
             background-color: #0f0f0f;
             color: #00ff41; 
             font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            overflow: hidden; /* Prevents scrollbars if ball hits edge */
         }
 
         .container {
             text-align: center;
+            z-index: 10; /* Keeps text above the ball */
+            pointer-events: none; /* Allows clicking "through" text if needed */
         }
 
         h1 {
             font-weight: 400;
             font-size: 1.5rem;
-            letter-spacing: -0.02em;
             margin: 0;
         }
 
-        /* The new second line style */
         p {
             margin-top: 10px;
             font-size: 1rem;
@@ -45,12 +45,62 @@
         @keyframes blink {
             50% { opacity: 0; }
         }
+
+        /* The Ball Styling */
+        #ball {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #00ff41;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff41; /* Gives it a slight glow */
+        }
     </style>
 </head>
 <body>
+
+    <div id="ball"></div>
+
     <div class="container">
         <h1>hello world</h1>
         <p>Epul Tak Hensem</p>
     </div>
+
+    <script>
+        const ball = document.getElementById('ball');
+        let x = Math.random() * window.innerWidth;
+        let y = Math.random() * window.innerHeight;
+        let dx = 3; // Horizontal speed
+        let dy = 3; // Vertical speed
+
+        function animate() {
+            // Move the ball
+            x += dx;
+            y += dy;
+
+            // Bounce off left/right
+            if (x + 15 > window.innerWidth || x < 0) {
+                dx = -dx;
+            }
+
+            // Bounce off top/bottom
+            if (y + 15 > window.innerHeight || y < 0) {
+                dy = -dy;
+            }
+
+            ball.style.left = x + 'px';
+            ball.style.top = y + 'px';
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Adjust on window resize to prevent ball getting stuck
+        window.addEventListener('resize', () => {
+            x = Math.min(x, window.innerWidth - 15);
+            y = Math.min(y, window.innerHeight - 15);
+        });
+    </script>
 </body>
 </html>
