@@ -3,104 +3,151 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>The Alif Daily | Cloud Edition</title>
     <style>
+        :root {
+            --paper: #f9f7f1;
+            --ink: #1a1a1a;
+            --accent: #8b0000; /* Newspaper Red */
+        }
         body {
+            background-color: #e5e5e5;
+            color: var(--ink);
+            font-family: 'Georgia', serif;
             margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column; 
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #0f0f0f;
-            color: #00ff41; 
-            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-            overflow: hidden; /* Prevents scrollbars if ball hits edge */
+            padding: 20px;
         }
-
-        .container {
+        .newspaper-container {
+            background-color: var(--paper);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            border: 1px solid #d1d1d1;
+        }
+        header {
             text-align: center;
-            z-index: 10; /* Keeps text above the ball */
-            pointer-events: none; /* Allows clicking "through" text if needed */
+            border-bottom: 4px double var(--ink);
+            margin-bottom: 20px;
         }
-
         h1 {
-            font-weight: 400;
-            font-size: 1.5rem;
-            margin: 0;
+            font-size: 3.5rem;
+            margin: 10px 0;
+            text-transform: uppercase;
+            letter-spacing: -1px;
         }
-
-        p {
-            margin-top: 10px;
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px solid var(--ink);
+            font-family: 'Arial', sans-serif;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        #news-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        .main-story {
+            grid-column: span 2;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+        }
+        .article {
+            margin-bottom: 20px;
+        }
+        .article h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.4rem;
+            line-height: 1.2;
+            color: var(--accent);
+            cursor: pointer;
+        }
+        .article p {
             font-size: 1rem;
-            opacity: 0.8;
+            line-height: 1.5;
+            color: #444;
         }
-
-        h1::after {
-            content: "_";
-            animation: blink 1s step-end infinite;
+        .loading {
+            text-align: center;
+            font-style: italic;
+            padding: 50px;
         }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        /* The Ball Styling */
-        #ball {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: #00ff41;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #00ff41; /* Gives it a slight glow */
+        @media (max-width: 768px) {
+            #news-grid { grid-template-columns: 1fr; }
+            .main-story { grid-column: span 1; }
+            h1 { font-size: 2rem; }
         }
     </style>
 </head>
 <body>
 
-    <div id="ball"></div>
+<div class="newspaper-container">
+    <header>
+        <div class="meta-info">
+            <span id="date-today"></span>
+            <span>Cloud Edition</span>
+            <span>Price: 0.00 BTC</span>
+        </div>
+        <h1>The Alif Daily</h1>
+    </header>
 
-    <div class="container">
-        <h1>hello world</h1>
-        <p>Epul Tak Hensem</p>
-    </div>
+    <div id="news-grid">
+        <div id="loader" class="loading">Fetching latest headlines from the cloud...</div>
+        </div>
+</div>
 
-    <script>
-        const ball = document.getElementById('ball');
-        let x = Math.random() * window.innerWidth;
-        let y = Math.random() * window.innerHeight;
-        let dx = 3; // Horizontal speed
-        let dy = 3; // Vertical speed
+<script>
+    // 1. SET YOUR API KEY HERE
+    const API_KEY = 'YOUR_NEWS_API_KEY_HERE';
+    const dateElement = document.getElementById('date-today');
+    const newsGrid = document.getElementById('news-grid');
+    const loader = document.getElementById('loader');
 
-        function animate() {
-            // Move the ball
-            x += dx;
-            y += dy;
+    // Set Today's Date
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateElement.innerText = new Date().toLocaleDateString('en-US', options);
 
-            // Bounce off left/right
-            if (x + 15 > window.innerWidth || x < 0) {
-                dx = -dx;
+    async function fetchNews() {
+        try {
+            // Fetching Top Business/Tech Headlines
+            const response = await fetch(`https://newsapi.org/v2/top-headlines?category=technology&language=en&apiKey=${API_KEY}`);
+            const data = await response.json();
+
+            if (data.status === 'ok') {
+                loader.style.display = 'none';
+                displayNews(data.articles);
+            } else {
+                loader.innerText = "Error: Use a valid API Key from newsapi.org";
             }
-
-            // Bounce off top/bottom
-            if (y + 15 > window.innerHeight || y < 0) {
-                dy = -dy;
-            }
-
-            ball.style.left = x + 'px';
-            ball.style.top = y + 'px';
-
-            requestAnimationFrame(animate);
+        } catch (error) {
+            loader.innerText = "Failed to load news. Check your connection.";
         }
+    }
 
-        animate();
-
-        // Adjust on window resize to prevent ball getting stuck
-        window.addEventListener('resize', () => {
-            x = Math.min(x, window.innerWidth - 15);
-            y = Math.min(y, window.innerHeight - 15);
+    function displayNews(articles) {
+        articles.slice(0, 7).forEach((article, index) => {
+            const articleDiv = document.createElement('div');
+            articleDiv.className = index === 0 ? 'article main-story' : 'article';
+            
+            articleDiv.innerHTML = `
+                <h3 onclick="window.open('${article.url}', '_blank')">${article.title}</h3>
+                <p>${article.description || 'No description available for this breaking story.'}</p>
+                <small>Source: ${article.source.name}</small>
+            `;
+            newsGrid.appendChild(articleDiv);
         });
-    </script>
+    }
+
+    if(API_KEY === 'YOUR_NEWS_API_KEY_HERE') {
+        loader.innerHTML = "<b style='color:red'>Action Required:</b><br>Please insert your API Key from <b>newsapi.org</b> in the code (line 98).";
+    } else {
+        fetchNews();
+    }
+</script>
+
 </body>
 </html>
