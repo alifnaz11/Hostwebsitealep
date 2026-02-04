@@ -69,6 +69,11 @@
             height: 100px;
             object-fit: cover;
             flex-shrink: 0;
+            background-color: #ddd;
+            display: none;
+        }
+        .article-image.loaded {
+            display: block;
         }
         .main-story .article-image {
             width: 100%;
@@ -153,11 +158,11 @@
             const articleDiv = document.createElement('div');
             articleDiv.className = index === 0 ? 'article main-story' : 'article';
             
-            const imageUrl = article.enclosure?.link || article.thumbnail || 'https://via.placeholder.com/300x200?text=No+Image';
+            const imageUrl = article.enclosure?.link || article.thumbnail || '';
             
             if (index === 0) {
                 articleDiv.innerHTML = `
-                    <img src="${imageUrl}" alt="News Image" class="article-image" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                    ${imageUrl ? `<img src="${imageUrl}" alt="News" class="article-image" onload="this.classList.add('loaded')" onerror="this.style.display='none'">` : ''}
                     <h3 onclick="window.open('${article.link}', '_blank')">${article.title}</h3>
                     <p>${article.description || 'No description available for this breaking story.'}</p>
                     <small>Source: Google News</small>
@@ -165,7 +170,7 @@
             } else {
                 articleDiv.innerHTML = `
                     <div class="article-content">
-                        <img src="${imageUrl}" alt="News Image" class="article-image" onerror="this.src='https://via.placeholder.com/150x100?text=No+Image'">
+                        ${imageUrl ? `<img src="${imageUrl}" alt="News" class="article-image" onload="this.classList.add('loaded')" onerror="this.style.display='none'">` : ''}
                         <div class="article-text">
                             <h3 onclick="window.open('${article.link}', '_blank')">${article.title}</h3>
                             <p>${article.description?.substring(0, 100) || 'No description available.'}...</p>
