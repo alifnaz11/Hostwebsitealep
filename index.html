@@ -3,273 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Alif Daily | Premium Edition</title>
+    <title>THE NOIR</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=EB+Garamond:wght@400;500&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --paper: #fdfcf8;
-            --ink: #121212;
-            --accent: #8b0000;
-            --border: #222;
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --text: #e0e0e0;
+            --accent: #ff3e3e; /* Signal Red */
+            --muted: #666;
+            --glass: rgba(255, 255, 255, 0.03);
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
 
         body {
-            background-color: #cacaca;
-            color: var(--ink);
-            font-family: 'EB Garamond', serif;
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Space Grotesk', sans-serif;
             margin: 0;
-            padding: 0;
-            /* Texture Overlay */
-            background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+            overflow-x: hidden;
         }
 
-        /* Newspaper Container */
-        .newspaper-container {
-            background-color: var(--paper);
-            max-width: 1300px;
-            margin: 40px auto;
-            padding: 50px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            border: 1px solid #999;
+        /* High-End Header */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid var(--muted);
+            padding: 20px;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .logo {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(3rem, 15vw, 10rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -5px;
+            margin: 0;
+            line-height: 0.9;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            font-size: 0.7rem;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+        /* Main Content Grid */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .news-layout {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 60px;
+        }
+
+        /* Article Cards */
+        .card {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+            margin-bottom: 60px;
             position: relative;
         }
 
-        /* Breaking Ticker */
-        .ticker-wrap {
+        .card:hover .img-container img { transform: scale(1.05); }
+        .card:hover h2 { color: var(--accent); }
+
+        .img-container {
             width: 100%;
+            aspect-ratio: 16/9;
             overflow: hidden;
-            background: var(--ink);
-            color: white;
-            padding: 8px 0;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: var(--surface);
+            border-radius: 2px;
             margin-bottom: 20px;
         }
 
-        .ticker-move {
-            display: flex;
-            width: max-content;
-            animation: ticker 30s linear infinite;
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%) brightness(0.8);
         }
 
-        @keyframes ticker {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
+        .card:hover img { filter: grayscale(0%) brightness(1); }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .meta-line {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-top: 2px solid var(--ink);
-            border-bottom: 2px solid var(--ink);
-            padding: 10px 0;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 700;
+        .category {
+            font-size: 0.7rem;
             text-transform: uppercase;
-        }
-
-        h1.logo {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3rem, 10vw, 7rem);
-            margin: 15px 0;
-            font-weight: 900;
-            letter-spacing: -3px;
-            line-height: 0.8;
-        }
-
-        /* Grid Layout */
-        .editorial-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 40px;
-        }
-
-        /* Article Styling */
-        .article {
-            margin-bottom: 40px;
-            text-decoration: none;
-            color: inherit;
+            letter-spacing: 2px;
+            color: var(--accent);
+            font-weight: 700;
             display: block;
-            transition: opacity 0.3s ease;
-        }
-
-        .article:hover { opacity: 0.8; }
-
-        .main-col { grid-column: 1; border-right: 1px solid #ddd; padding-right: 40px; }
-        
-        .lead-headline {
-            font-family: 'Playfair Display', serif;
-            font-size: 3.5rem;
-            line-height: 1;
-            margin: 0 0 20px 0;
-            font-weight: 900;
-        }
-
-        /* First letter drop cap */
-        .lead-text::first-letter {
-            float: left;
-            font-family: 'Playfair Display', serif;
-            font-size: 5rem;
-            line-height: 0.9;
-            padding-right: 8px;
-            font-weight: 900;
-        }
-
-        .sub-headline {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            line-height: 1.2;
             margin-bottom: 10px;
         }
 
-        .article-img {
-            width: 100%;
-            height: 300px;
-            object-fit: cover;
-            background-color: #eee;
-            margin-bottom: 15px;
-            filter: grayscale(0.2) contrast(1.1);
-            border: 1px solid #ddd;
+        h2 {
+            font-size: 2.5rem;
+            line-height: 1.1;
+            margin: 0 0 15px 0;
+            font-weight: 700;
         }
 
-        .source {
-            font-family: 'Inter', sans-serif;
-            font-size: 0.7rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            font-weight: 800;
-            margin-bottom: 5px;
-            display: block;
+        p {
+            color: var(--muted);
+            line-height: 1.6;
+            font-size: 1.1rem;
+            max-width: 600px;
         }
 
-        p { font-size: 1.15rem; line-height: 1.5; margin-bottom: 15px; }
-
-        @media (max-width: 1000px) {
-            .editorial-grid { grid-template-columns: 1fr 1fr; }
-            .main-col { grid-column: span 2; border-right: none; padding-right: 0; }
+        /* Sidebar Briefs */
+        .sidebar {
+            border-left: 1px solid var(--muted);
+            padding-left: 60px;
         }
 
-        @media (max-width: 600px) {
-            .editorial-grid { grid-template-columns: 1fr; }
-            .main-col { grid-column: span 1; }
-            .newspaper-container { padding: 20px; margin: 10px; }
-            .lead-headline { font-size: 2.2rem; }
+        .brief {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--glass);
+        }
+
+        .brief h3 {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+
+        /* Utility */
+        .meta-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            font-size: 0.8rem;
+            border-bottom: 1px solid var(--glass);
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        @media (max-width: 900px) {
+            .news-layout { grid-template-columns: 1fr; }
+            .sidebar { border-left: none; padding-left: 0; }
+            h2 { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-<div class="ticker-wrap">
-    <div class="ticker-move" id="ticker">
-        LATEST UPDATES: CLOUD DATA FETCHED SUCCESSFULLY • THE ALIF DAILY IS NOW LIVE • PREMIUM NEWS EXPERIENCE REDESIGNED FOR 2026 •&nbsp;
+    <div class="meta-bar">
+        <span>THE ALIF // DIGITAL ARCHIVE</span>
+        <span id="date-display"></span>
+        <span style="color: var(--accent)">● LIVE UPDATES</span>
     </div>
-</div>
 
-<div class="newspaper-container">
     <header>
-        <div class="meta-line">
-            <span>Vol. I — No. 001</span>
-            <span id="current-date">MONDAY, MARCH 2, 2026</span>
-            <span>PRICE: 0.00 MYR</span>
-        </div>
-        <h1 class="logo">The Alif Daily</h1>
-        <div style="border-bottom: 4px solid var(--ink); margin-top: 10px;"></div>
+        <h1 class="logo">ALIF<br>DAILY</h1>
+        <div class="scroll-indicator">SCROLL TO READ</div>
     </header>
 
-    <div id="loader" style="text-align: center; padding: 100px;">
-        <p style="font-family: 'Inter'; text-transform: uppercase; letter-spacing: 2px;">Printing Edition...</p>
+    <div class="container">
+        <div id="loader">PRINTING DATA...</div>
+        
+        <div class="news-layout" id="news-content" style="display: none;">
+            <div id="main-feed"></div>
+
+            <div class="sidebar">
+                <h4 style="letter-spacing: 4px; color: var(--muted); margin-bottom: 30px;">LATEST HEADLINES</h4>
+                <div id="brief-feed"></div>
+            </div>
+        </div>
     </div>
 
-    <div id="main-content" class="editorial-grid" style="display: none;">
-        <div class="main-col" id="col-1"></div>
-
-        <div class="side-col" id="col-2"></div>
-
-        <div class="side-col" id="col-3"></div>
-    </div>
-</div>
-
-<script>
-    async function getNews() {
+    <script>
         const RSS_URL = 'https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en';
         const API = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`;
 
-        try {
-            const res = await fetch(API);
-            const data = await res.json();
-            if(data.status === 'ok') render(data.items);
-        } catch(e) { 
-            document.getElementById('loader').innerText = "Press Stalled. Check Connection."; 
-        }
-    }
-
-    function render(items) {
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('main-content').style.display = 'grid';
-
-        const c1 = document.getElementById('col-1');
-        const c2 = document.getElementById('col-2');
-        const c3 = document.getElementById('col-3');
-
-        items.forEach((item, i) => {
-            const cleanTitle = item.title.split(' - ')[0];
-            const source = item.title.split(' - ')[1] || 'NEWS';
-            
-            // Add to ticker
-            document.getElementById('ticker').innerHTML += ` ${cleanTitle.toUpperCase()} • `;
-
-            if (i === 0) {
-                // LEAD STORY
-                c1.innerHTML = `
-                    <a href="${item.link}" target="_blank" class="article">
-                        <span class="source">Top Priority</span>
-                        <h2 class="lead-headline">${cleanTitle}</h2>
-                        <img src="https://picsum.photos/800/500?random=${i}" class="article-img">
-                        <p class="lead-text">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 300)}...</p>
-                        <hr>
-                    </a>
-                `;
-            } else if (i < 4) {
-                // MID STORIES
-                c2.innerHTML += `
-                    <a href="${item.link}" target="_blank" class="article" style="border-bottom: 1px solid #ddd; padding-bottom: 20px;">
-                        <span class="source">${source}</span>
-                        <h3 class="sub-headline">${cleanTitle}</h3>
-                        <p style="font-size: 0.95rem;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 100)}...</p>
-                    </a>
-                `;
-            } else if (i < 9) {
-                // BRIEFS
-                c3.innerHTML += `
-                    <a href="${item.link}" target="_blank" class="article" style="border-bottom: 1px dashed #999; padding-bottom: 15px;">
-                        <span class="source">${source}</span>
-                        <h3 class="sub-headline" style="font-size: 1.1rem;">${cleanTitle}</h3>
-                    </a>
-                `;
+        async function fetchNews() {
+            try {
+                const res = await fetch(API);
+                const data = await res.json();
+                if (data.status === 'ok') render(data.items);
+            } catch (e) {
+                document.getElementById('loader').innerText = "SYSTEM ERROR: FEED DISCONNECTED";
             }
-        });
-    }
+        }
 
-    document.getElementById('current-date').innerText = new Date().toLocaleDateString('en-US', {
-        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-    }).toUpperCase();
+        function render(items) {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('news-content').style.display = 'grid';
 
-    getNews();
-</script>
+            const feed = document.getElementById('main-feed');
+            const briefs = document.getElementById('brief-feed');
 
+            items.forEach((item, i) => {
+                const cleanTitle = item.title.split(' - ')[0];
+                const source = item.title.split(' - ')[1] || 'GLOBAL';
+
+                if (i < 5) {
+                    // Feature Cards
+                    feed.innerHTML += `
+                        <a href="${item.link}" target="_blank" class="card">
+                            <span class="category">${source}</span>
+                            <div class="img-container">
+                                <img src="https://picsum.photos/1200/800?random=${i}" alt="News">
+                            </div>
+                            <h2>${cleanTitle}</h2>
+                            <p>${item.description.replace(/<[^>]*>?/gm, '').substring(0, 150)}...</p>
+                        </a>
+                    `;
+                } else if (i < 12) {
+                    // Sidebar Briefs
+                    briefs.innerHTML += `
+                        <a href="${item.link}" target="_blank" class="card brief">
+                            <span class="category" style="font-size: 0.6rem;">${source}</span>
+                            <h3>${cleanTitle}</h3>
+                        </a>
+                    `;
+                }
+            });
+        }
+
+        document.getElementById('date-display').innerText = new Date().toLocaleDateString('en-US', {
+            month: 'short', day: '2-digit', year: 'numeric'
+        }).toUpperCase();
+
+        fetchNews();
+    </script>
 </body>
 </html>
