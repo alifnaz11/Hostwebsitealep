@@ -1,250 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE NOIR</title>
+    <title>THE ALIF // MALAYSIA EDITION</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;700&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Playfair+Display:wght@900&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg: #0a0a0a;
-            --surface: #141414;
-            --text: #e0e0e0;
-            --accent: #ff3e3e; /* Signal Red */
-            --muted: #666;
-            --glass: rgba(255, 255, 255, 0.03);
+        :root[data-theme="light"] {
+            --bg: #f4f4f2;
+            --surface: #ffffff;
+            --text: #1a1a1a;
+            --muted: #666666;
+            --accent: #d4af37; /* Gold */
+            --border: rgba(0,0,0,0.1);
+            --glass: rgba(255,255,255,0.8);
         }
 
-        * { box-sizing: border-box; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        :root[data-theme="dark"] {
+            --bg: #0f0f0f;
+            --surface: #1a1a1a;
+            --text: #f0f0f0;
+            --muted: #888888;
+            --accent: #ffd700;
+            --border: rgba(255,255,255,0.1);
+            --glass: rgba(15,15,15,0.8);
+        }
+
+        * { box-sizing: border-box; transition: background 0.4s, color 0.4s; }
 
         body {
             background-color: var(--bg);
             color: var(--text);
-            font-family: 'Space Grotesk', sans-serif;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             margin: 0;
-            overflow-x: hidden;
-        }
-
-        /* High-End Header */
-        header {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 1px solid var(--muted);
-            padding: 20px;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #0a0a0a 100%);
-        }
-
-        .logo {
-            font-family: 'Syncopate', sans-serif;
-            font-size: clamp(3rem, 15vw, 10rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: -5px;
-            margin: 0;
-            line-height: 0.9;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            font-size: 0.7rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--muted);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-
-        /* Main Content Grid */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 80px 20px;
-        }
-
-        .news-layout {
-            display: grid;
-            grid-template-columns: 1.5fr 1fr;
-            gap: 60px;
-        }
-
-        /* Article Cards */
-        .card {
-            display: block;
-            text-decoration: none;
-            color: inherit;
-            margin-bottom: 60px;
-            position: relative;
-        }
-
-        .card:hover .img-container img { transform: scale(1.05); }
-        .card:hover h2 { color: var(--accent); }
-
-        .img-container {
-            width: 100%;
-            aspect-ratio: 16/9;
-            overflow: hidden;
-            background: var(--surface);
-            border-radius: 2px;
-            margin-bottom: 20px;
-        }
-
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: grayscale(100%) brightness(0.8);
-        }
-
-        .card:hover img { filter: grayscale(0%) brightness(1); }
-
-        .category {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--accent);
-            font-weight: 700;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 2.5rem;
-            line-height: 1.1;
-            margin: 0 0 15px 0;
-            font-weight: 700;
-        }
-
-        p {
-            color: var(--muted);
             line-height: 1.6;
-            font-size: 1.1rem;
-            max-width: 600px;
         }
 
-        /* Sidebar Briefs */
-        .sidebar {
-            border-left: 1px solid var(--muted);
-            padding-left: 60px;
-        }
-
-        .brief {
-            padding: 20px 0;
-            border-bottom: 1px solid var(--glass);
-        }
-
-        .brief h3 {
-            font-size: 1.2rem;
-            margin: 10px 0;
-        }
-
-        /* Utility */
-        .meta-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 20px;
-            font-size: 0.8rem;
-            border-bottom: 1px solid var(--glass);
-            background: var(--glass);
-            backdrop-filter: blur(10px);
+        /* Glass Header */
+        nav {
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        @media (max-width: 900px) {
-            .news-layout { grid-template-columns: 1fr; }
-            .sidebar { border-left: none; padding-left: 0; }
-            h2 { font-size: 1.8rem; }
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        /* Theme Toggle */
+        .theme-btn {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 8px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        /* Layout */
+        .hero {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 40px;
+        }
+
+        .main-story {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            text-decoration: none;
+            color: white;
+            background: #000;
+        }
+
+        .main-story img {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+            transition: transform 0.8s;
+        }
+
+        .main-story:hover img { transform: scale(1.05); opacity: 0.8; }
+
+        .story-content { position: relative; z-index: 2; }
+
+        .badge {
+            background: var(--accent);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 800;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .grid {
+            max-width: 1200px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 20px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
+
+        .card h3 { margin: 0; font-size: 1.2rem; line-height: 1.3; }
+
+        .card p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+
+        .footer-tag { font-size: 0.7rem; font-weight: 700; color: var(--accent); }
+
+        #loader { text-align: center; padding: 100px; font-weight: 800; opacity: 0.5; }
+
+        @media (max-width: 768px) {
+            .hero { grid-template-columns: 1fr; }
+            .main-story { height: 400px; padding: 20px; }
+            nav { padding: 15px 20px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="meta-bar">
-        <span>THE ALIF // DIGITAL ARCHIVE</span>
-        <span id="date-display"></span>
-        <span style="color: var(--accent)">● LIVE UPDATES</span>
-    </div>
+    <nav>
+        <div class="brand">ALIF // MSIA</div>
+        <button class="theme-btn" onclick="toggleTheme()">SWITCH THEME</button>
+    </nav>
 
-    <header>
-        <h1 class="logo">ALIF<br>DAILY</h1>
-        <div class="scroll-indicator">SCROLL TO READ</div>
-    </header>
+    <div id="loader">FETCHING MALAYSIAN HEADLINES...</div>
 
-    <div class="container">
-        <div id="loader">PRINTING DATA...</div>
-        
-        <div class="news-layout" id="news-content" style="display: none;">
-            <div id="main-feed"></div>
-
-            <div class="sidebar">
-                <h4 style="letter-spacing: 4px; color: var(--muted); margin-bottom: 30px;">LATEST HEADLINES</h4>
-                <div id="brief-feed"></div>
+    <section id="content" style="display: none;">
+        <div class="hero" id="hero-section">
             </div>
-        </div>
-    </div>
+
+        <div class="grid" id="news-grid">
+            </div>
+    </section>
 
     <script>
-        const RSS_URL = 'https://news.google.com/rss?hl=en-US&gl=US&ceid=US:en';
-        const API = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS_URL)}`;
+        // Theme Logic
+        function toggleTheme() {
+            const root = document.documentElement;
+            const current = root.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', target);
+            localStorage.setItem('theme', target);
+        }
 
-        async function fetchNews() {
+        // Apply saved theme
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+
+        // Fetch Malaysia News (gl=MY and ceid=MY:en targets Malaysia)
+        async function fetchMYNews() {
+            const RSS = 'https://news.google.com/rss?hl=en-MY&gl=MY&ceid=MY:en';
+            const API = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(RSS)}`;
+
             try {
                 const res = await fetch(API);
                 const data = await res.json();
                 if (data.status === 'ok') render(data.items);
             } catch (e) {
-                document.getElementById('loader').innerText = "SYSTEM ERROR: FEED DISCONNECTED";
+                document.getElementById('loader').innerText = "FAILED TO CONNECT TO PRESS";
             }
         }
 
         function render(items) {
             document.getElementById('loader').style.display = 'none';
-            document.getElementById('news-content').style.display = 'grid';
+            document.getElementById('content').style.display = 'block';
 
-            const feed = document.getElementById('main-feed');
-            const briefs = document.getElementById('brief-feed');
+            const heroSection = document.getElementById('hero-section');
+            const grid = document.getElementById('news-grid');
 
             items.forEach((item, i) => {
-                const cleanTitle = item.title.split(' - ')[0];
-                const source = item.title.split(' - ')[1] || 'GLOBAL';
+                const title = item.title.split(' - ')[0];
+                const source = item.title.split(' - ')[1] || 'MALAYSIA NEWS';
+                const desc = item.description.replace(/<[^>]*>?/gm, '').substring(0, 150);
 
-                if (i < 5) {
-                    // Feature Cards
-                    feed.innerHTML += `
-                        <a href="${item.link}" target="_blank" class="card">
-                            <span class="category">${source}</span>
-                            <div class="img-container">
-                                <img src="https://picsum.photos/1200/800?random=${i}" alt="News">
+                if (i === 0) {
+                    heroSection.innerHTML = `
+                        <a href="${item.link}" target="_blank" class="main-story">
+                            <img src="https://picsum.photos/1200/800?random=msia" alt="Hero">
+                            <div class="story-content">
+                                <span class="badge">Breaking Malaysia</span>
+                                <h1 style="font-size: 2.5rem; margin: 15px 0;">${title}</h1>
+                                <p style="color: #ddd;">${desc}...</p>
                             </div>
-                            <h2>${cleanTitle}</h2>
-                            <p>${item.description.replace(/<[^>]*>?/gm, '').substring(0, 150)}...</p>
                         </a>
+                        <div style="display: flex; flex-direction: column; gap: 20px;">
+                            <div class="card" style="flex: 1;">
+                                <span class="footer-tag">REGIONAL UPDATE</span>
+                                <h3>The latest developments across the Peninsula and Borneo.</h3>
+                            </div>
+                            <div class="card" style="flex: 1; background: var(--accent); color: #000;">
+                                <h3 style="margin:0">Subscribe to Alif Premium</h3>
+                                <p style="color: #000; opacity: 0.7;">Get deep-dive analysis on MY politics.</p>
+                            </div>
+                        </div>
                     `;
-                } else if (i < 12) {
-                    // Sidebar Briefs
-                    briefs.innerHTML += `
-                        <a href="${item.link}" target="_blank" class="card brief">
-                            <span class="category" style="font-size: 0.6rem;">${source}</span>
-                            <h3>${cleanTitle}</h3>
+                } else {
+                    grid.innerHTML += `
+                        <a href="${item.link}" target="_blank" class="card">
+                            <span class="footer-tag">${source}</span>
+                            <h3>${title}</h3>
+                            <p>${desc}...</p>
+                            <span style="font-size: 0.7rem; opacity: 0.5;">${item.pubDate}</span>
                         </a>
                     `;
                 }
             });
         }
 
-        document.getElementById('date-display').innerText = new Date().toLocaleDateString('en-US', {
-            month: 'short', day: '2-digit', year: 'numeric'
-        }).toUpperCase();
-
-        fetchNews();
+        fetchMYNews();
     </script>
 </body>
 </html>
